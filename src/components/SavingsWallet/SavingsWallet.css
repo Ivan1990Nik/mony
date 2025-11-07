@@ -1,0 +1,98 @@
+/* SavingsWallet.css */
+.savings-wallet-container {
+  background-color: var(--bg-light);
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px var(--shadow-light);
+  transition: box-shadow 0.3s;
+  display: flex;
+  flex-direction: column;
+  gap: 20px; /* Отступ между секциями */
+}
+
+.dark .savings-wallet-container {
+  background-color: var(--bg-dark);
+  box-shadow: 0 4px 8px var(--shadow-dark);
+}
+
+.section-title {
+  color: var(--success-light);
+  margin-bottom: 10px;
+}
+
+.dark .section-title {
+  color: var(--success-dark);
+}
+
+.total-amount {
+  font-size: 1.1em;
+  font-weight: bold;
+  color: var(--text-light);
+  margin-bottom: 15px;
+}
+
+.dark .total-amount {
+  color: var(--text-dark);
+}
+
+.reset-btn {
+  background-color: var(--success-light);
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s, opacity 0.3s;
+  width: 100%;
+  font-size: 1em;
+  margin-bottom: 10px;
+}
+
+.reset-btn:hover {
+  background-color: var(--success-light);
+  opacity: 0.8;
+}
+
+.dark .reset-btn {
+  background-color: var(--success-dark);
+}
+
+.use-wallet-input {
+  margin-top: 15px;
+}
+
+.input-label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+  color: var(--text-light);
+}
+
+.dark .input-label {
+  color: var(--text-dark);
+}
+
+.wallet-input {
+  padding: 8px;
+  border: 1px solid var(--shadow-light);
+  border-radius: 4px;
+  width: 100%;
+  background-color: var(--bg-light);
+  color: var(--text-light);
+}
+
+.dark .wallet-input {
+  background-color: var(--bg-dark);
+  color: var(--text-dark);
+  border-color: var(--shadow-dark);
+}
+
+@media (max-width: 768px) {
+  .savings-wallet-container {
+    padding: 15px;
+    gap: 15px;
+  }
+  .reset-btn {
+    padding: 12px;
+  }
+}

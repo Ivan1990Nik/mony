@@ -1,0 +1,158 @@
+/* History.css */
+.history-container {
+  background-color: var(--bg-light);
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px var(--shadow-light);
+  transition: box-shadow 0.3s;
+  display: flex;
+  flex-direction: column;
+  gap: 15px; /* Отступ между элементами */
+}
+
+.dark .history-container {
+  background-color: var(--bg-dark);
+  box-shadow: 0 4px 8px var(--shadow-dark);
+}
+
+.history-title {
+  color: #0056b3; /* Тёмно-синий, как в Calculation.css */
+  margin: 0;
+  font-size: 1.5em;
+  font-weight: bold;
+}
+
+.dark .history-title {
+  color: #007bff; /* Светло-синий в тёмной теме */
+}
+
+.toggle-history-btn {
+  background-color: var(--primary-light);
+  color: rgb(107, 5, 5);
+  border: 2px solid var(--primary-light);
+  padding: 10px 20px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s, opacity 0.3s, transform 0.2s;
+  width: fit-content; /* Не на всю ширину */
+  font-size: 1em;
+  font-weight: bold;
+  box-shadow: 0 2px 4px var(--shadow-light);
+}
+
+.toggle-history-btn:hover {
+  background-color: var(--primary-dark);
+  opacity: 0.9;
+  transform: scale(1.05);
+  box-shadow: 0 4px 8px var(--shadow-light);
+}
+
+.dark .toggle-history-btn {
+  background-color: var(--primary-dark);
+  border-color: var(--primary-dark);
+  box-shadow: 0 2px 4px var(--shadow-dark);
+}
+
+.history-list {
+  list-style-type: none; /* Убираем стандартные маркеры */
+  padding: 0;
+  margin: 0;
+}
+
+.history-item {
+  background-color: var(--bg-light);
+  border: 1px solid var(--shadow-light);
+  border-radius: 8px;
+  padding: 10px 15px;
+  margin-bottom: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px; /* Отступ между строками */
+  transition: border-color 0.3s;
+}
+
+.dark .history-item {
+  background-color: var(--bg-dark);
+  border-color: var(--shadow-dark);
+}
+
+.history-item:hover {
+  border-color: var(--primary-light);
+}
+
+.dark .history-item:hover {
+  border-color: var(--primary-dark);
+}
+
+.history-timestamp {
+  font-weight: bold;
+  color: var(--text-light);
+  font-size: 0.9em;
+}
+
+.dark .history-timestamp {
+  color: var(--text-dark);
+}
+
+.history-description {
+  color: var(--text-light);
+  flex: 1; /* Занимает оставшееся пространство */
+}
+
+.dark .history-description {
+  color: var(--text-dark);
+}
+
+.delete-history-btn {
+  background-color: #dc3545; /* Красный для удаления */
+  color: white;
+  border: 2px solid #dc3545;
+  padding: 5px 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s, opacity 0.3s, transform 0.2s;
+  align-self: flex-end; /* Кнопка справа */
+  font-size: 0.9em;
+  font-weight: bold;
+  box-shadow: 0 2px 4px rgba(220, 53, 69, 0.3);
+}
+
+.delete-history-btn:hover {
+  background-color: #c82333; /* Тёмно-красный при наведении */
+  opacity: 0.9;
+  transform: scale(1.05);
+  box-shadow: 0 4px 8px rgba(220, 53, 69, 0.4);
+}
+
+.history-empty {
+  color: var(--text-light);
+  font-style: italic;
+  padding: 10px;
+  text-align: center;
+}
+
+.dark .history-empty {
+  color: var(--text-dark);
+}
+
+@media (max-width: 768px) {
+  .history-container {
+    padding: 15px;
+    gap: 10px;
+  }
+  .history-title {
+    font-size: 1.3em;
+  }
+  .toggle-history-btn {
+    padding: 12px 20px;
+    font-size: 0.95em;
+  }
+  .history-item {
+    padding: 8px 12px;
+    flex-direction: column; /* На мобильных оставляем вертикально */
+  }
+  .delete-history-btn {
+    align-self: center; /* Центрируем на мобильных */
+    margin-top: 5px;
+  }
+}

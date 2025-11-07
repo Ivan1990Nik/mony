@@ -1,0 +1,41 @@
+/* Header.css */
+.header {
+  grid-column: 1 / -1;
+  text-align: center;
+  padding: 20px;
+  background: linear-gradient(135deg, var(--accent-light), var(--success-light));
+  color: white;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px var(--shadow-light);
+}
+
+.dark .header {
+  background: linear-gradient(135deg, var(--accent-dark), var(--success-dark));
+}
+
+.header-title {
+  font-size: 2em;
+  margin-bottom: 10px;
+}
+
+.header-stats {
+  display: flex;
+  justify-content: space-around;
+  margin-bottom: 15px;
+}
+
+.theme-toggle {
+  background: rgba(255, 255, 255, 0.2);
+  border: 1px solid white;
+}
+
+.theme-toggle:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+@media (max-width: 768px) {
+  .header-stats {
+    flex-direction: column;
+    gap: 5px;
+  }
+}

@@ -1,0 +1,99 @@
+/* Calculation.css */
+.calculation-container {
+  background-color: var(--bg-light);
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px var(--shadow-light);
+  transition: box-shadow 0.3s;
+  display: flex;
+  flex-direction: column;
+  gap: 20px; /* Отступ между секциями */
+}
+
+.dark .calculation-container {
+  background-color: var(--bg-dark);
+  box-shadow: 0 4px 8px var(--shadow-dark);
+}
+
+.calculate-btn {
+  background-color: #007bff; /* Фиксированный ярко-синий для светлой темы, чтобы не сливаться */
+  color: white;
+  border: 2px solid #007bff; /* Граница того же цвета для усиления */
+  padding: 15px 25px; /* Увеличен padding для большего размера */
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s, opacity 0.3s, transform 0.2s; /* Анимация при наведении */
+  width: 100%;
+  font-size: 1.2em; /* Увеличен размер шрифта */
+  font-weight: bold;
+  box-shadow: 0 4px 8px rgba(0, 123, 255, 0.3); /* Синяя тень для видимости */
+}
+
+.calculate-btn:hover:not(:disabled) {
+  background-color: #0056b3; /* Тёмно-синий при наведении */
+  opacity: 0.9;
+  transform: scale(1.05); /* Лёгкое увеличение */
+  box-shadow: 0 6px 12px rgba(0, 123, 255, 0.4); /* Усилена тень */
+}
+
+.dark .calculate-btn {
+  background-color: #0056b3; /* Тёмно-синий в тёмной теме */
+  border-color: #0056b3;
+  box-shadow: 0 4px 8px rgba(0, 123, 255, 0.6); /* Яркая тень в тёмной теме */
+}
+
+.calculate-btn:disabled {
+  background-color: #cccccc; /* Серый для отключённого состояния */
+  border-color: #cccccc;
+  cursor: not-allowed;
+  opacity: 0.5;
+  box-shadow: none; /* Без тени */
+}
+
+.result-section, .remaining-section {
+  margin-top: 10px;
+}
+
+.result-title, .remaining-title {
+  color: #0056b3; /* Фиксированный тёмно-синий для заголовков, чтобы отличать от кнопки */
+  margin-bottom: 10px;
+}
+
+.dark .result-title, .dark .remaining-title {
+  color: #007bff; /* Светло-синий в тёмной теме для контраста */
+}
+
+.result-list {
+  list-style-type: disc;
+  padding-left: 20px;
+  color: var(--text-light);
+}
+
+.dark .result-list {
+  color: var(--text-dark);
+}
+
+.result-item {
+  margin-bottom: 5px;
+}
+
+.remaining-amount {
+  font-size: 1.1em;
+  font-weight: bold;
+  color: var(--text-light);
+}
+
+.dark .remaining-amount {
+  color: var(--text-dark);
+}
+
+@media (max-width: 768px) {
+  .calculation-container {
+    padding: 15px;
+    gap: 15px;
+  }
+  .calculate-btn {
+    padding: 18px 25px; /* Слегка увеличен для мобильных */
+    font-size: 1.1em;
+  }
+}

@@ -1,0 +1,101 @@
+/* IncomeForm.css */
+.income-form-container {
+  background-color: var(--bg-light);
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px var(--shadow-light);
+  transition: box-shadow 0.3s;
+}
+
+.dark .income-form-container {
+  background-color: var(--bg-dark);
+  box-shadow: 0 4px 8px var(--shadow-dark);
+}
+
+.income-form-title {
+  color: var(--success-light);
+  margin-bottom: 15px;
+}
+
+.dark .income-form-title {
+  color: var(--success-dark);
+}
+
+.income-form {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+  color: var(--text-light);
+}
+
+.dark .form-label {
+  color: var(--text-dark);
+}
+
+.date-input, .amount-input {
+  padding: 8px;
+  border: 1px solid var(--shadow-light);
+  border-radius: 4px;
+  margin-bottom: 15px;
+  width: 100%;
+  background-color: var(--bg-light);
+  color: var(--text-light);
+}
+
+.dark .date-input, .dark .amount-input {
+  background-color: var(--bg-dark);
+  color: var(--text-dark);
+  border-color: var(--shadow-dark);
+}
+
+.add-income-btn {
+  background-color: var(--success-light);
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s, opacity 0.3s;
+  width: 100%;
+  font-size: 1em;
+}
+
+.add-income-btn:hover:not(:disabled) {
+  background-color: var(--success-light);
+  opacity: 0.8;
+}
+
+.dark .add-income-btn {
+  background-color: var(--success-dark);
+}
+
+.add-income-btn:disabled {
+  background-color: #cccccc;
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+.note {
+  margin-top: 15px;
+  font-size: 0.9em;
+  color: var(--text-light);
+  opacity: 0.8;
+}
+
+.dark .note {
+  color: var(--text-dark);
+}
+
+@media (max-width: 768px) {
+  .income-form-container {
+    padding: 15px;
+  }
+  .add-income-btn {
+    padding: 12px;
+  }
+}

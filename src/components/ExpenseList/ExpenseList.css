@@ -1,0 +1,7 @@
+.expense-list {
+  background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%), url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect x="0" y="0" width="10" height="10" fill="rgba(255,255,255,0.05)"/></svg>');
+  background-size: cover;
+  padding: 25px;
+  border-radius: 16px;
+  margin-bottom: 20px;
+}

@@ -1,0 +1,94 @@
+/* ExpenseForm.css */
+.expense-form-container {
+  background-color: var(--bg-light);
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px var(--shadow-light);
+  transition: box-shadow 0.3s;
+}
+
+.dark .expense-form-container {
+  background-color: var(--bg-dark);
+  box-shadow: 0 4px 8px var(--shadow-dark);
+}
+
+.expense-form-title {
+  color: var(--danger-light);
+  margin-bottom: 15px;
+}
+
+.dark .expense-form-title {
+  color: var(--danger-dark);
+}
+
+.expense-form {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+  color: var(--text-light);
+}
+
+.dark .form-label {
+  color: var(--text-dark);
+}
+
+.name-input, .date-input, .amount-input, .priority-select {
+  padding: 8px;
+  border: 1px solid var(--shadow-light);
+  border-radius: 4px;
+  margin-bottom: 15px;
+  width: 100%;
+  background-color: var(--bg-light);
+  color: var(--text-light);
+}
+
+.dark .name-input, .dark .date-input, .dark .amount-input, .dark .priority-select {
+  background-color: var(--bg-dark);
+  color: var(--text-dark);
+  border-color: var(--shadow-dark);
+}
+
+.priority-select {
+  margin-bottom: 20px; /* Немного больше отступа перед кнопкой */
+}
+
+.add-expense-btn {
+  background-color: var(--danger-light);
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s, opacity 0.3s;
+  width: 100%;
+  font-size: 1em;
+}
+
+.add-expense-btn:hover:not(:disabled) {
+  background-color: var(--danger-light);
+  opacity: 0.8;
+}
+
+.dark .add-expense-btn {
+  background-color: var(--danger-dark);
+}
+
+.add-expense-btn:disabled {
+  background-color: #cccccc;
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+@media (max-width: 768px) {
+  .expense-form-container {
+    padding: 15px;
+  }
+  .add-expense-btn {
+    padding: 12px;
+  }
+}
