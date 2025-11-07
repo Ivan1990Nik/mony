@@ -2,7 +2,7 @@
 import React from 'react';
 import './IncomeForm.css';
 
-function IncomeForm({ incomeDate, setIncomeDate, incomeAmount, setIncomeAmount, onAddIncome }) {
+function IncomeForm({ incomeDate, incomeName, setIncomeDate, incomeAmount, setIncomeAmount, onAddIncome, setIncomeName }) {
   return (
     <div className="income-form-container">
       <h2 className="income-form-title">Доходы (доступные для расходов)</h2>
@@ -13,6 +13,15 @@ function IncomeForm({ incomeDate, setIncomeDate, incomeAmount, setIncomeAmount, 
           value={incomeDate} 
           onChange={(e) => setIncomeDate(e.target.value)} 
           className="date-input"
+          required 
+        />
+        <label className="form-label">Название дохода:</label>
+        <input 
+          type="string" 
+          value={incomeName} 
+           placeholder="Название дохода" 
+          onChange={(e) => setIncomeName(e.target.value)} 
+          className="amount-input"
           required 
         />
         <label className="form-label">Сумма дохода:</label>

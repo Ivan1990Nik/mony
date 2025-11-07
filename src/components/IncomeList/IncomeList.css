@@ -1,0 +1,103 @@
+/* Контейнер списка доходов */
+.income-list {
+  background-color: var(--bg-color, #f9f9f9);  /* Фон из темы */
+  color: var(--text-color, #333);  /* Текст из темы */
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  margin: 20px 0;
+  max-width: 600px;  /* Ограничение ширины для читаемости */
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Заголовок */
+.income-list-title {
+  font-size: 1.5rem;
+  margin-bottom: 15px;
+  color: var(--text-color, #333);
+  text-align: center;
+}
+
+/* Список */
+.income-list-items {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+/* Элемент списка */
+.income-list-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  border-bottom: 1px solid var(--border-color, #ddd);
+  transition: background-color 0.3s ease;  /* Плавный hover */
+}
+
+.income-list-item:hover {
+  background-color: var(--hover-bg, #e0e0e0);  /* Hover-эффект для элемента */
+}
+
+.income-list-item:last-child {
+  border-bottom: none;  /* Убираем границу у последнего элемента */
+}
+
+/* Части элемента: имя, дата, сумма */
+.income-name {
+  flex: 1;
+  font-weight: bold;
+}
+
+.income-date {
+  flex: 1;
+  font-size: 0.9rem;
+  color: var(--secondary-text, #666);
+}
+
+.income-amount {
+  flex: 1;
+  text-align: right;
+  font-weight: bold;
+  color: var(--positive-color, #28a745);  /* Зелёный для доходов (как в Calculation) */
+}
+
+/* Кнопка удаления */
+.income-delete-btn {
+  background-color: var(--button-bg, #dc3545);  /* Красный для удаления */
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: background-color 0.3s ease, transform 0.2s ease;  /* Hover и анимация */
+  margin-left: 10px;
+}
+
+.income-delete-btn:hover {
+  background-color: var(--button-hover, #c82333);  /* Темнее при hover */
+  transform: scale(1.05);  /* Лёгкое увеличение */
+}
+
+.income-delete-btn:focus {
+  outline: 2px solid var(--focus-color, #007bff);  /* Доступность: фокус */
+}
+
+/* Адаптивность для мобильных */
+@media (max-width: 768px) {
+  .income-list-item {
+    flex-direction: column;  /* Вертикально на мобильных */
+    align-items: flex-start;
+  }
+
+  .income-delete-btn {
+    margin-top: 10px;
+    align-self: flex-end;  /* Кнопка справа внизу */
+  }
+
+  .income-amount {
+    text-align: left;  /* Выравнивание для мобильных */
+  }
+}

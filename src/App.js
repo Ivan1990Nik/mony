@@ -21,6 +21,7 @@ function App() {
   const [history, setHistory] = useState([]);
   const [showHistory, setShowHistory] = useState(false);
   const [incomeDate, setIncomeDate] = useState('');
+  const [incomeName, setIncomeName] = useState('');
   const [incomeAmount, setIncomeAmount] = useState('');
   const [expenseName, setExpenseName] = useState('');
   const [expenseAmount, setExpenseAmount] = useState('');
@@ -54,6 +55,7 @@ function App() {
   // Функции
   const handleAddIncome = (e) => {
     e.preventDefault();
+
     const amount = parseFloat(incomeAmount);
     if (amount <= 0 || !incomeDate) return;
 
@@ -64,12 +66,13 @@ function App() {
 
     setSavings(prev => prev + savingsPart);
     setWallet(prev => prev + walletPart);
-    setIncomes(prev => [...prev, { date: incomeDate, amount: availablePart }]);
+    setIncomes(prev => [...prev, { date: incomeDate, amount: availablePart, name: incomeName }]);
 
     setHistory(prev => [...prev, { description: `Доход: ${availablePart.toFixed(2)} руб. (округлено, 10% в заначку, остаток в кошелёк)`, timestamp: Date.now() }]);
 
     setIncomeDate('');
     setIncomeAmount('');
+    setIncomeName('');
   };
 
   const handleAddExpense = (e) => {
@@ -113,41 +116,131 @@ function App() {
   };
 
   const calculate = () => {
-    let totalIncome = incomes.reduce((sum, inc) => sum + inc.amount, 0);
-    let totalExpense = expenses.reduce((sum, exp) => sum + exp.amount, 0);
-    const walletUsage = parseFloat(useFromWallet) || 0;
+  // Проверки (как раньше)
+  const walletUsage = parseFloat(useFromWallet) || 0;
+  if (walletUsage > wallet) {
+    alert('Недостаточно средств в кошельке!');
+    return;
+  }
 
-    if (walletUsage > wallet) {
-      alert('Недостаточно средств в кошельке!');
-      return;
-    }
+  // Собираем источники: кошелёк + доходы (сортированные по дате, старые сначала)
+  const sources = [];
+  let walletSource = null;  // Отдельный трек для кошелька
 
-    totalIncome += walletUsage;
-    setWallet(prev => prev - walletUsage);
+  if (walletUsage > 0) {
+    walletSource = { name: 'Кошелёк', remaining: walletUsage, originalAmount: walletUsage, key: 'wallet' };
+    sources.push(walletSource);
+  }
 
-    // Сортировка расходов по приоритету
-    const sortedExpenses = [...expenses].sort((a, b) => {
-      const priorities = { 'Высокий': 3, 'Средний': 2, 'Низкий': 1 };
-      return priorities[b.priority] - priorities[a.priority];
+  // Сортировка доходов по дате (старые сначала) + сохраняем ссылку на оригинал для обновления
+  const sortedIncomes = [...incomes].sort((a, b) => new Date(a.date) - new Date(b.date));
+  sortedIncomes.forEach((inc, index) => {
+    const key = `${inc.name}-${inc.date}`;  // Уникальный ключ для матчинга
+    sources.push({ 
+      ...inc,  // Копируем свойства оригинала
+      remaining: parseFloat(inc.amount),  // Парсим в число!
+      originalAmount: parseFloat(inc.amount),  // Парсим в число!
+      key: key,
+      originalIndex: index  // Для обновления incomes по индексу
     });
+  });
 
-    let remaining = totalIncome;
-    const result = [];
+  // Сортировка расходов по приоритету + копия для обновления
+  const sortedExpenses = [...expenses].sort((a, b) => {
+    const priorities = { 'Высокий': 3, 'Средний': 2, 'Низкий': 1 };
+    return priorities[b.priority] - priorities[a.priority];
+  });
 
-    for (const exp of sortedExpenses) {
-      if (remaining >= exp.amount) {
-        remaining -= exp.amount;
-        result.push(`${exp.name} (${exp.date}): покрыто ${exp.amount.toFixed(2)} руб.`);
-      } else {
-        result.push(`${exp.name} (${exp.date}): частично покрыто ${remaining.toFixed(2)} руб. (осталось ${exp.amount.toFixed(2)} руб.)`);
-        remaining = 0;
+  const result = [];
+  let totalDeficit = 0;
+  let updatedExpenses = [...expenses];  // Копия для обновления состояния
+
+  for (let i = 0; i < sortedExpenses.length; i++) {
+    const exp = sortedExpenses[i];
+    const expAmount = parseFloat(exp.amount);  // Парсим в число для точного сравнения!
+    let expCovered = 0;
+    const coverageDetails = [];
+
+    for (const source of sources) {
+      if (source.remaining > 0 && expCovered < expAmount) {
+        const needed = expAmount - expCovered;
+        const coverAmount = Math.min(needed, source.remaining);
+        source.remaining -= coverAmount;
+        expCovered += coverAmount;
+        coverageDetails.push({ source: source.name, amount: coverAmount });
       }
     }
 
-    setCalculation(result);
-    setTotalRemaining(remaining);
-    setHistory(prev => [...prev, { description: `Расчёт выполнен. Остаток: ${remaining.toFixed(2)} руб.`, timestamp: Date.now() }]);
-  };
+    // Обновляем расход в updatedExpenses (находим по name/date для матчинга)
+    const expKey = `${exp.name}-${exp.date}`;
+    const expIndex = updatedExpenses.findIndex(e => `${e.name}-${e.date}` === expKey);
+    if (expIndex !== -1) {
+      updatedExpenses[expIndex].amount = parseFloat(updatedExpenses[expIndex].amount) - expCovered;  // Парсим и уменьшаем
+      if (updatedExpenses[expIndex].amount <= 0) {
+        // Удаляем полностью покрытый расход
+        updatedExpenses.splice(expIndex, 1);
+        i--;  // Корректируем индекс
+      }
+    }
+
+    // Формируем строку для result (теперь с парсингом expAmount)
+    if (expCovered >= expAmount) {
+      const detailsStr = coverageDetails.map(d => `${d.source}: ${d.amount.toFixed(2)} руб.`).join(', ');
+      result.push(`${exp.name} (${exp.date}): полностью покрыт (${detailsStr})`);
+    } else {
+      const shortfall = expAmount - expCovered;
+      const detailsStr = coverageDetails.map(d => `${d.source}: ${d.amount.toFixed(2)} руб.`).join(', ');
+      result.push(`${exp.name} (${exp.date}): покрыт частично (${detailsStr}) (не хватает ${shortfall.toFixed(2)} руб.)`);
+      totalDeficit += shortfall;
+    }
+  }
+
+  // Обновляем доходы в состоянии (уменьшаем на использованное)
+  let updatedIncomes = [...incomes];
+  sources.forEach(source => {
+    if (source.key !== 'wallet') {  // Пропускаем кошелёк
+      const usedAmount = source.originalAmount - source.remaining;
+      const incomeIndex = updatedIncomes.findIndex(inc => 
+        `${inc.name}-${inc.date}` === source.key
+      );
+      if (incomeIndex !== -1 && usedAmount > 0) {
+        updatedIncomes[incomeIndex].amount = parseFloat(updatedIncomes[incomeIndex].amount) - usedAmount;  // Парсим и уменьшаем
+        if (updatedIncomes[incomeIndex].amount <= 0) {
+          updatedIncomes.splice(incomeIndex, 1);  // Удаляем полностью использованный доход
+        }
+      }
+    }
+  });
+  setIncomes(updatedIncomes);  // Обновляем состояние доходов
+
+  // Обновляем расходы
+  setExpenses(updatedExpenses);
+
+  // Обновляем кошелёк: вычитаем реально использованное
+  let walletUsed = 0;
+  if (walletSource) {
+    walletUsed = walletSource.originalAmount - walletSource.remaining;
+  }
+  setWallet(prev => prev - walletUsed);
+
+  // Общий остаток (как раньше)
+  const totalRemaining = sources.reduce((sum, src) => sum + src.remaining, 0);
+  setTotalRemaining(totalRemaining);
+
+  // Добавляем общий дефицит в result
+  if (totalDeficit > 0) {
+    result.push(`Общий дефицит: ${totalDeficit.toFixed(2)} руб.`);
+  }
+
+  setCalculation(result);
+  setHistory(prev => [...prev, { 
+    description: totalRemaining >= 0 
+      ? `Расчёт выполнен. Остаток: ${totalRemaining.toFixed(2)} руб.` 
+      : `Расчёт выполнен. Дефицит: ${(-totalRemaining).toFixed(2)} руб.`, 
+    timestamp: Date.now() 
+  }]);
+};
+
 
   return (
     <div className="App">
@@ -162,9 +255,11 @@ function App() {
       />
       <IncomeForm
         incomeDate={incomeDate}
+        incomeName={incomeName}
         setIncomeDate={setIncomeDate}
         incomeAmount={incomeAmount}
         setIncomeAmount={setIncomeAmount}
+        setIncomeName={setIncomeName}
         onAddIncome={handleAddIncome}
       />
       <IncomeList incomes={incomes} onDeleteIncome={handleDeleteIncome} />

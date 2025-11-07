@@ -1,14 +1,16 @@
-// Calculation.js
 import React from 'react';
 import './Calculation.css';
 
 function Calculation({ incomes, expenses, onCalculate, calculation, totalRemaining }) {
+  const remainingClass = totalRemaining !== null ? (totalRemaining >= 0 ? 'positive' : 'negative') : '';
+
   return (
     <div className="calculation-container">
       <button 
         onClick={onCalculate} 
         disabled={expenses.length === 0} 
         className="calculate-btn"
+        aria-label="Рассчитать покрытие расходов доходами"
       >
         Рассчитать
       </button>
@@ -23,7 +25,7 @@ function Calculation({ incomes, expenses, onCalculate, calculation, totalRemaini
       {totalRemaining !== null && (
         <div className="remaining-section">
           <h2 className="remaining-title">Остаток</h2>
-          <p className="remaining-amount">После покрытия расходов: {totalRemaining.toFixed(2)} руб.</p>
+          <p className={`remaining-amount ${remainingClass}`}>После покрытия расходов: {totalRemaining.toFixed(2)} руб.</p>
         </div>
       )}
     </div>

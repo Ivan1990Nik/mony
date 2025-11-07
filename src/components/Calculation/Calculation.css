@@ -1,99 +1,124 @@
-/* Calculation.css */
+/* Контейнер расчётов */
 .calculation-container {
-  background-color: var(--bg-light);
+  background-color: var(--bg-color, #f9f9f9);  /* Фон из темы */
+  color: var(--text-color, #333);  /* Текст из темы */
   padding: 20px;
-  border-radius: 10px;
-  box-shadow: 0 4px 8px var(--shadow-light);
-  transition: box-shadow 0.3s;
-  display: flex;
-  flex-direction: column;
-  gap: 20px; /* Отступ между секциями */
-}
-
-.dark .calculation-container {
-  background-color: var(--bg-dark);
-  box-shadow: 0 4px 8px var(--shadow-dark);
-}
-
-.calculate-btn {
-  background-color: #007bff; /* Фиксированный ярко-синий для светлой темы, чтобы не сливаться */
-  color: white;
-  border: 2px solid #007bff; /* Граница того же цвета для усиления */
-  padding: 15px 25px; /* Увеличен padding для большего размера */
   border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  margin: 20px 0;
+  max-width: 600px;  /* Ограничение ширины */
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;  /* Центрирование для кнопки и заголовков */
+}
+
+/* Кнопка "Рассчитать" */
+.calculate-btn {
+  background-color: var(--button-bg, #007bff);  /* Синий для действия (как в других компонентах) */
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 4px;
+  font-size: 1rem;
   cursor: pointer;
-  transition: background-color 0.3s, opacity 0.3s, transform 0.2s; /* Анимация при наведении */
-  width: 100%;
-  font-size: 1.2em; /* Увеличен размер шрифта */
-  font-weight: bold;
-  box-shadow: 0 4px 8px rgba(0, 123, 255, 0.3); /* Синяя тень для видимости */
+  transition: background-color 0.3s ease, transform 0.2s ease, opacity 0.3s ease;  /* Hover и анимация */
+  margin-bottom: 20px;
 }
 
 .calculate-btn:hover:not(:disabled) {
-  background-color: #0056b3; /* Тёмно-синий при наведении */
-  opacity: 0.9;
-  transform: scale(1.05); /* Лёгкое увеличение */
-  box-shadow: 0 6px 12px rgba(0, 123, 255, 0.4); /* Усилена тень */
-}
-
-.dark .calculate-btn {
-  background-color: #0056b3; /* Тёмно-синий в тёмной теме */
-  border-color: #0056b3;
-  box-shadow: 0 4px 8px rgba(0, 123, 255, 0.6); /* Яркая тень в тёмной теме */
+  background-color: var(--button-hover, #0056b3);  /* Темнее при hover */
+  transform: scale(1.05);  /* Лёгкое увеличение */
 }
 
 .calculate-btn:disabled {
-  background-color: #cccccc; /* Серый для отключённого состояния */
-  border-color: #cccccc;
+  background-color: var(--disabled-bg, #ccc);  /* Серый для disabled */
   cursor: not-allowed;
-  opacity: 0.5;
-  box-shadow: none; /* Без тени */
+  opacity: 0.6;
 }
 
-.result-section, .remaining-section {
-  margin-top: 10px;
+.calculate-btn:focus {
+  outline: 2px solid var(--focus-color, #007bff);  /* Доступность: фокус */
 }
 
-.result-title, .remaining-title {
-  color: #0056b3; /* Фиксированный тёмно-синий для заголовков, чтобы отличать от кнопки */
+/* Секция результата */
+.result-section {
+  margin-top: 20px;
+  padding: 15px;
+  background-color: var(--section-bg, #fff);  /* Светлый фон для секции */
+  border-radius: 6px;
+  border: 1px solid var(--border-color, #ddd);
+}
+
+.result-title {
+  font-size: 1.4rem;
   margin-bottom: 10px;
-}
-
-.dark .result-title, .dark .remaining-title {
-  color: #007bff; /* Светло-синий в тёмной теме для контраста */
+  color: var(--text-color, #333);
 }
 
 .result-list {
-  list-style-type: disc;
-  padding-left: 20px;
-  color: var(--text-light);
-}
-
-.dark .result-list {
-  color: var(--text-dark);
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  text-align: left;  /* Выравнивание по левому краю для списка */
 }
 
 .result-item {
-  margin-bottom: 5px;
+  padding: 8px 0;
+  border-bottom: 1px solid var(--border-color, #eee);
+  font-size: 1rem;
+  line-height: 1.4;
+}
+
+.result-item:last-child {
+  border-bottom: none;  /* Убираем границу у последнего элемента */
+}
+
+/* Секция остатка */
+.remaining-section {
+  margin-top: 20px;
+  padding: 15px;
+  background-color: var(--section-bg, #fff);  /* Светлый фон для секции */
+  border-radius: 6px;
+  border: 1px solid var(--border-color, #ddd);
+}
+
+.remaining-title {
+  font-size: 1.4rem;
+  margin-bottom: 10px;
+  color: var(--text-color, #333);
 }
 
 .remaining-amount {
-  font-size: 1.1em;
+  font-size: 1.2rem;
   font-weight: bold;
-  color: var(--text-light);
+  margin: 0;
 }
 
-.dark .remaining-amount {
-  color: var(--text-dark);
+.remaining-amount.positive {
+  color: var(--positive-color, #28a745);  /* Зелёный для положительного остатка */
 }
 
+.remaining-amount.negative {
+  color: var(--negative-color, #dc3545);  /* Красный для отрицательного остатка */
+}
+
+/* Адаптивность для мобильных */
 @media (max-width: 768px) {
   .calculation-container {
     padding: 15px;
-    gap: 15px;
   }
+
   .calculate-btn {
-    padding: 18px 25px; /* Слегка увеличен для мобильных */
-    font-size: 1.1em;
+    width: 100%;  /* Полная ширина на мобильных */
+    padding: 15px;
+  }
+
+  .result-list,
+  .remaining-amount {
+    text-align: center;  /* Центрирование на мобильных для лучшей читаемости */
+  }
+
+  .result-item {
+    font-size: 0.9rem;  /* Меньший шрифт на мобильных */
   }
 }

@@ -1,7 +1,127 @@
+/* Контейнер списка расходов */
 .expense-list {
-  background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%), url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect x="0" y="0" width="10" height="10" fill="rgba(255,255,255,0.05)"/></svg>');
-  background-size: cover;
-  padding: 25px;
-  border-radius: 16px;
-  margin-bottom: 20px;
+  background-color: var(--bg-color, #f9f9f9);  /* Фон из темы */
+  color: var(--text-color, #333);  /* Текст из темы */
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  margin: 20px 0;
+  max-width: 600px;  /* Ограничение ширины для читаемости */
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Заголовок */
+.expense-list-title {
+  font-size: 1.5rem;
+  margin-bottom: 15px;
+  color: var(--text-color, #333);
+  text-align: center;
+}
+
+/* Список */
+.expense-list-items {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+/* Элемент списка */
+.expense-list-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  border-bottom: 1px solid var(--border-color, #ddd);
+  transition: background-color 0.3s ease;  /* Плавный hover */
+  border-left: 5px solid transparent;  /* Для цветной полоски приоритета */
+}
+
+.expense-list-item:hover {
+  background-color: var(--hover-bg, #e0e0e0);  /* Hover-эффект для элемента */
+}
+
+.expense-list-item:last-child {
+  border-bottom: none;  /* Убираем границу у последнего элемента */
+}
+
+/* Приоритеты: цветные полоски и текст */
+.priority-high {
+  border-left-color: #dc3545;  /* Красный для высокого */
+}
+
+.priority-medium {
+  border-left-color: #ff9800;  /* Оранжевый для среднего */
+}
+
+.priority-low {
+  border-left-color: #28a745;  /* Зелёный для низкого */
+}
+
+.expense-priority {
+  font-size: 0.9rem;
+  font-weight: bold;
+  color: var(--text-color, #333);
+}
+
+/* Части элемента: имя, дата, сумма */
+.expense-name {
+  flex: 1;
+  font-weight: bold;
+}
+
+.expense-date {
+  flex: 1;
+  font-size: 0.9rem;
+  color: var(--secondary-text, #666);
+}
+
+.expense-amount {
+  flex: 1;
+  text-align: right;
+  font-weight: bold;
+  color: var(--negative-color, #dc3545);  /* Красный для расходов (как в Calculation) */
+}
+
+/* Кнопка удаления */
+.expense-delete-btn {
+  background-color: var(--button-bg, #dc3545);  /* Красный для удаления */
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: background-color 0.3s ease, transform 0.2s ease;  /* Hover и анимация */
+  margin-left: 10px;
+}
+
+.expense-delete-btn:hover {
+  background-color: var(--button-hover, #c82333);  /* Темнее при hover */
+  transform: scale(1.05);  /* Лёгкое увеличение */
+}
+
+.expense-delete-btn:focus {
+  outline: 2px solid var(--focus-color, #007bff);  /* Доступность: фокус */
+}
+
+/* Адаптивность для мобильных */
+@media (max-width: 768px) {
+  .expense-list-item {
+    flex-direction: column;  /* Вертикально на мобильных */
+    align-items: flex-start;
+  }
+
+  .expense-delete-btn {
+    margin-top: 10px;
+    align-self: flex-end;  /* Кнопка справа внизу */
+  }
+
+  .expense-amount {
+    text-align: left;  /* Выравнивание для мобильных */
+  }
+
+  .expense-priority {
+    margin-top: 5px;  /* Отступ для приоритета */
+  }
 }
